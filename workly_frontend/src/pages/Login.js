@@ -4,6 +4,37 @@ function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
+  const handleLogin = async () => {
+    try {
+      const response = await fetch("http://127.0.0.1:8000/api/users/login/", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          email: email,
+          password: password,
+        }),
+      });
+
+      const data = await response.json();
+
+      console.log("Response:", data);
+
+      if (response.ok) {
+        // ✅ Store token
+        localStorage.setItem("access_token", data.access);
+        localStorage.setItem("refresh_token", data.refresh);
+        console.log("access",data.access)
+        alert("Login successful!");
+      } else {
+        alert("Login failed");
+      }
+    } catch (error) {
+      console.error("Error:", error);
+    }
+  };
+
   return (
     <div>
       <h2>Login</h2>
@@ -26,7 +57,7 @@ function Login() {
 
       <br /><br />
 
-      <button>Login</button>
+      <button onClick={handleLogin}>Login</button>
     </div>
   );
 }
