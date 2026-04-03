@@ -1,0 +1,15 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "workly-hrms",
+            "type": "debugpy",
+            "request": "launch",
+            "program": "${workspaceFolder}/workly_hrms/manage.py",
+            "args": ["runserver"],
+            "django": true,
+            "autoStartBrowser": false,
+            "justMyCode": true
+        }
+    ]
+}
