@@ -1,9 +1,10 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
-function Login() {
+function Login({ setIsLoggedIn }) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-
+  const navigate = useNavigate();
   const handleLogin = async () => {
     try {
       const response = await fetch("http://127.0.0.1:8000/api/users/login/", {
@@ -26,7 +27,9 @@ function Login() {
         localStorage.setItem("access_token", data.access);
         localStorage.setItem("refresh_token", data.refresh);
         console.log("access",data.access)
-        alert("Login successful!");
+        // setIsLoggedIn(true);
+        navigate("/dashboard");
+        // alert("Login successful!");
       } else {
         alert("Login failed");
       }
