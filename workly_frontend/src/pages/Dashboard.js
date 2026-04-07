@@ -1,6 +1,8 @@
 import React from "react";
 import { Link, Routes, Route } from "react-router-dom";
-
+import Employment from "./Employment";
+import Personal from "./Personal";
+import Contact from "./Contact"
 function Dashboard() {
   return (
     <div style={{ display: "flex" }}>
@@ -36,10 +38,9 @@ function Dashboard() {
         <Routes>
           <Route path="/" element={<h2>Dashboard</h2>} />
 
-          <Route path="personal" element={<h2>Personal Info Page</h2>} />
-          <Route path="contact" element={<h2>Contact Info Page</h2>} />
-          <Route path="employment" element={<h2>Employment Info Page</h2>} />
-
+          <Route path="personal" element={<Personal />} />
+          <Route path="personal" element={<Contact />} />
+          <Route path="employment" element={<Employment />} />
           <Route path="punchin" element={<h2>Punch In Page</h2>} />
           <Route path="punchout" element={<h2>Punch Out Page</h2>} />
           <Route path="attendance" element={<h2>My Attendance Page</h2>} />
