@@ -39,7 +39,7 @@ function Dashboard() {
           <Route path="/" element={<h2>Dashboard</h2>} />
 
           <Route path="personal" element={<Personal />} />
-          <Route path="personal" element={<Contact />} />
+          <Route path="contact" element={<Contact />} />
           <Route path="employment" element={<Employment />} />
           <Route path="punchin" element={<h2>Punch In Page</h2>} />
           <Route path="punchout" element={<h2>Punch Out Page</h2>} />
