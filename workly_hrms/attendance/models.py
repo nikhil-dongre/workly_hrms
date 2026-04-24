@@ -1,6 +1,7 @@
 from django.db import models
 from employees.models import Employee
 # Create your models here.
+from datetime import timedelta
 
 class Attendance(models.Model):
     date = models.DateField()
@@ -9,7 +10,7 @@ class Attendance(models.Model):
         on_delete=models.SET_NULL,
         null=True
     )
-    total_worked_hours = models.DurationField(default=0)
+    total_worked_hours = models.DurationField(default=timedelta(0))
     def __str__(self):
         return self.employee.emp_code if self.employee else "No Employee"
     class Meta:

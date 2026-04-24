@@ -9,6 +9,7 @@ class AttendanceSerializer(serializers.ModelSerializer):
         fields = ['id', 'date', 'employee', 'total_worked_hours']
 
     def get_total_worked_hours(self, obj):
+        
         duration = obj.total_worked_hours
 
         if not duration:

@@ -101,3 +101,35 @@ class PunchOutView(APIView):
             {"message": "Punch out was successful"},
             status=200
         )
+    
+class TodayAttendance(APIView):
+    permission_classes = [IsAuthenticated]
+
+    def get(self,request):
+        current_user = request.user
+        now = timezone.now()
+        date = now.date()
+        try:
+            emp_rec = Employee.objects.get(user = current_user)
+        except Employee.DoesNotExist:
+            return Response({"error": "Employee does not exist"}, status=404)
+        
+        try:
+            attendance_rec = Attendance.objects.get(employee = emp_rec,date=date)
+        except Attendance.DoesNotExist:
+            return Response({"error": "Attendance for today is not available"}, status=404)
+        status = ''
+        if attendance_rec:
+            open_atten_log = AttendanceLog.objects.filter(attendance = attendance_rec,
+                                                          punch_out__isnull=True , punch_in__isnull=False).exists()
+            
+            if open_atten_log:
+                status = 'IN'
+            else:
+                status = 'OUT'
+        serializer = AttendanceSerializer(attendance_rec)
+
+        return Response({
+            "status": status,
+            "data": serializer.data
+        })
