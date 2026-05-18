@@ -4,6 +4,7 @@ from rest_framework.permissions import IsAuthenticated
 from django.utils import timezone
 from employees.models import Employee
 from .models import Attendance, AttendanceLog
+from datetime import datetime
 
 from .serializers import AttendanceSerializer
 class PunchInView(APIView):
@@ -133,3 +134,23 @@ class TodayAttendance(APIView):
             "status": status,
             "data": serializer.data
         })
+    
+class PunchLogs(APIView):
+    permission_classes = [IsAuthenticated]
+    def get(self,request):
+        print('current user:',request.user)
+        current_user = request.user
+        try:
+            emp_obj = Employee.objects.get(user = current_user)
+        except Employee.DoesNotExist:
+            return {"error":"you need to login from the appropriate user"}
+        current_month = datetime.now().month
+
+        months_log = Attendance.objects.filter(employee = emp_obj,
+                                               date__month=current_month)
+        log_serializer=AttendanceSerializer(months_log,many=True)
+        print(log_serializer.data)
+        return Response({
+            "data": log_serializer.data
+        }
+        )
