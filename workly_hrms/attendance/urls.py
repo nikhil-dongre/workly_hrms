@@ -7,5 +7,4 @@ urlpatterns = [
     path('punch_out/',PunchOutView.as_view()),
     path('today/', TodayAttendance.as_view(), name='today_attendance'),
     path('logs/', PunchLogs.as_view()),
-
 ]
